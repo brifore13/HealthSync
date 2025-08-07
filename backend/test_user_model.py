@@ -1,4 +1,4 @@
-from app.models.user import User
+from backend.app.models.user import User
 from datetime import date
 
 print("Testing user model")

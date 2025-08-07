@@ -23,7 +23,7 @@ class User(Base):
     # System fields
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     is_active = Column(Boolean, default=True)
-    timezone = Column(String(50), default="PST")
+    timezone = Column(String(50), default="UTC")
 
     @property
     def age(self) -> int:
