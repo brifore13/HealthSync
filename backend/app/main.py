@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .core.database import engine, Base
 from .api.auth import router as auth_router
+from .api.health import router as health_router
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -21,6 +22,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 app.include_router(auth_router, prefix="/api/v1")
+app.include_router(health_router, prefix="/api/v1")
+
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request, exc):
