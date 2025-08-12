@@ -1,7 +1,8 @@
 """CORE API METHODS"""
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from .core.database import engine, Base
 from .api.auth import router as auth_router
 from .api.health import router as health_router
@@ -26,13 +27,16 @@ app.include_router(health_router, prefix="/api/v1")
 
 
 @app.exception_handler(Exception)
-async def global_exception_handler(request, exc):
+async def global_exception_handler(request: Request, exc: Exception):
     """Global exception handler for debugging"""
-    return {
-        "error": "Internal server error",
-        "detail": str(exc) if app.debug else "Something went wrong"
-    }
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Internal server error",
+            "detail": str(exc)
+        }
+    )
 
-app.get("/")
+@app.get("/")
 def read_root():
     return {"message": "HealthSync API is running"}
