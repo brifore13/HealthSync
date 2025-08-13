@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import api from '../services/api';
 import './Login.css'
 
@@ -92,4 +92,4 @@ function Login({ onLoginSuccess }) {
     );
 }
 
-export default Login
+export default Login;

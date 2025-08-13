@@ -36,22 +36,38 @@ function App() {
     return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    return <Login onLoginSuccess={handleLoginSuccess} />;
-  }
-
   return (
     <Router>
       <div className="App">
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            {/* Add components here */}
+            <Route 
+              path="/login" 
+              element={
+                isAuthenticated ? 
+                <Navigate to="/dashboard" replace /> : 
+                <Login onLoginSuccess={handleLoginSuccess} />
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={
+                isAuthenticated ? 
+                <Dashboard onLogout={handleLogout} /> : 
+                <Navigate to="/login" replace />
+              } 
+            />
+            <Route 
+              path="/" 
+              element={
+                <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />
+              } 
+            />
           </Routes>
         </main>
       </div>
     </Router>
+
   );
 }
 
